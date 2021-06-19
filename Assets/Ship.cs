@@ -14,16 +14,19 @@ public class Ship : MonoBehaviour
     [SerializeField] Transform bulletPoint;
 
     Rigidbody2D body;
+    LevelManager manager;
 
-    private void Start()
+    private void OnEnable()
     {
         body = GetComponent<Rigidbody2D>();
+        manager = Services.Request<LevelManager>();
+        manager.playerShip = this;
     }
 
     private void Update()
     {
         float rotate = Input.GetAxisRaw("Horizontal");
-        if (rotate != 0) Rotate();
+        if (rotate != 0) Rotate(rotate);
 
         if (Input.GetKey(KeyCode.W))
             Thrust();
@@ -32,22 +35,30 @@ public class Ship : MonoBehaviour
         {
             Shot();
         }
+
+        Debug.Log(body.velocity.magnitude);
     }
 
     public void Thrust()
     {
         Vector2 velocity = body.velocity + (Time.deltaTime * acceleration * (Vector2)transform.up);
-        body.velocity = (velocity.sqrMagnitude > Mathf.Sqrt(maxSpeed)) ? velocity.normalized * maxSpeed : velocity;
+        body.velocity = (velocity.sqrMagnitude > (maxSpeed * maxSpeed)) ? velocity.normalized * maxSpeed : velocity;
     }
 
-    public void Rotate()
+    public void Rotate(float direction)
     {
-        Vector3 rotation = new Vector3(0, 0, Time.deltaTime * rotationSpeed);
+        Vector3 rotation = new Vector3(0, 0, Time.deltaTime * rotationSpeed * direction);
         transform.Rotate(rotation);
     }
 
     public void Shot()
     {
         Instantiate(bulletPrefab, bulletPoint.position, transform.rotation);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Destroy(gameObject);
+        //check respawn
     }
 }

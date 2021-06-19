@@ -24,6 +24,7 @@ public class Warp : MonoBehaviour
     void WarpPositionX()
     {
         Vector3 position = transform.position;
+        position.x = Mathf.Clamp(position.x, -area.x, area.x);
         position.x *= -1;
         transform.position = position;
     }
@@ -31,6 +32,7 @@ public class Warp : MonoBehaviour
     void WarpPositionY()
     {
         Vector3 position = transform.position;
+        position.y = Mathf.Clamp(position.y, -area.y, area.y);
         position.y *= -1;
         transform.position = position;
     }

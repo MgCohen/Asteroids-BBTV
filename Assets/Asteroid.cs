@@ -7,9 +7,21 @@ public class Asteroid : MonoBehaviour
 
     float speed;
     int size;
+    bool destroyed = false;
+
+    AsteroidController controller;
+
 
     [SerializeField]
     SpriteRenderer sprite;
+    [SerializeField]
+    CircleCollider2D col;
+
+
+    private void OnEnable()
+    {
+        controller = Services.Request<AsteroidController>();
+    }
 
     public void Set(int _size, Sprite _sprite, float _speed)
     {
@@ -21,9 +33,8 @@ public class Asteroid : MonoBehaviour
 
     public void Split()
     {
-        var spawner = Services.Request<AsteroidController>();
-        spawner.SpawnAsteroid(transform.position, transform.rotation, size - 1);
-        spawner.SpawnAsteroid(transform.position, transform.rotation, size - 1);
+        controller.SpawnAsteroid(transform.position, transform.rotation * Quaternion.Euler(new Vector3(0, 0, Random.Range(-15, 15))), size - 1);
+        controller.SpawnAsteroid(transform.position, transform.rotation * Quaternion.Euler(new Vector3(0, 0, Random.Range(-15, 15))), size - 1);
     }
 
     private void Update()
@@ -33,7 +44,9 @@ public class Asteroid : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        col.enabled = false;
         Destroy(gameObject);
+        controller.DestroyAsteroid();
         if (size > 1) Split();
     }
 

@@ -18,6 +18,8 @@ public class AsteroidController : MonoBehaviour
     {
         Services.Register<AsteroidController>(this);
         playArea = PlayArea.Frame;
+        manager = Services.Request<LevelManager>();
+        manager.OnWaveEnd.AddListener(SpawnWave);
     }
 
     private void OnDisable()
@@ -25,34 +27,44 @@ public class AsteroidController : MonoBehaviour
         Services.Unregister<AsteroidController>(this);
     }
 
+    private void Start()
+    {
+        //manager.EndWave();
+    }
+
 
     public void SpawnAsteroid(Vector3 position, Quaternion rotation, int size)
     {
-       var asteroid = Instantiate(asteroidPrefab, position, rotation);
+        var asteroid = Instantiate(asteroidPrefab, position, rotation);
         Sprite sprite = asteroidSprites[Random.Range(0, asteroidSprites.Count)];
         float speed = Random.Range(minSpeed, maxSpeed);
         asteroid.Set(size, sprite, speed);
         asteroidCount++;
     }
 
-    public void SpawnWave(int wave)
+    public void SpawnWave()
     {
         //any crazy spawn algorithm
+        int wave = manager.currentWave;
         int asteroidCount = 5 + wave;
         for (int i = 0; i < asteroidCount; i++)
         {
-            SpawnAsteroid(RandomPoint(), RandomRotation(), 3);
+            var point = RandomPoint();
+            do
+            {
+                point = RandomPoint();
+            }
+            while (Vector3.Distance(point, manager.playerShip.transform.position) < 1.5f);
+            SpawnAsteroid(point, RandomRotation(), 3);
         }
     }
 
     public void DestroyAsteroid()
     {
         asteroidCount--;
-        if(asteroidCount <= 0)
+        if (asteroidCount <= 0)
         {
-            if (manager == null) manager = Services.Request<LevelManager>();
-            manager.currentWave++;
-            SpawnWave(manager.currentWave);
+            manager.EndWave();
         }
     }
 

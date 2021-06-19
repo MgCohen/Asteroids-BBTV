@@ -13,6 +13,7 @@ public class Services
             Debug.Log("There is already a service of this type registered");
             return;
         }
+        Debug.Log(typeof(T) + " Service registered");
         services.Add(typeof(T), service);
     }
 
