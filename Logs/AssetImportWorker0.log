@@ -1577,3 +1577,24 @@ Received Import Request.
 Start importing Assets/Bullet.prefab using Guid(fb1035a4068d1460c9721538df07d632) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd8018d261b26cb8efebe8bb639498dea') in 0.083757 seconds
   Import took 0.088574 seconds .
 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.006450 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.49 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.397 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.77 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2084 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 193.7 MB.
+System memory in use after: 193.8 MB.
+
+Unloading 21 unused Assets to reduce memory usage. Loaded Objects now: 2770.
+Total: 3.491175 ms (FindLiveObjects: 0.377576 ms CreateObjectMapping: 0.116868 ms MarkObjects: 2.811038 ms  DeleteObjects: 0.184065 ms)
+
