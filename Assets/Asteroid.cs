@@ -2,12 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Asteroid : MonoBehaviour
+public class Asteroid : MonoBehaviour, IDestroyable
 {
 
     float speed;
     int size;
-    bool destroyed = false;
 
     AsteroidController controller;
 
@@ -33,8 +32,8 @@ public class Asteroid : MonoBehaviour
 
     public void Split()
     {
-        controller.SpawnAsteroid(transform.position, transform.rotation * Quaternion.Euler(new Vector3(0, 0, Random.Range(-15, 15))), size - 1);
-        controller.SpawnAsteroid(transform.position, transform.rotation * Quaternion.Euler(new Vector3(0, 0, Random.Range(-15, 15))), size - 1);
+        controller.SpawnAsteroid(transform.position, transform.rotation * Quaternion.Euler(new Vector3(0, 0, Random.Range(-25, 25))), size - 1);
+        controller.SpawnAsteroid(transform.position, transform.rotation * Quaternion.Euler(new Vector3(0, 0, Random.Range(-25, 25))), size - 1);
     }
 
     private void Update()
@@ -42,11 +41,12 @@ public class Asteroid : MonoBehaviour
         transform.position += transform.up * Time.deltaTime * speed;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    public void Hit()
     {
         col.enabled = false;
         Destroy(gameObject);
         controller.DestroyAsteroid();
+        Services.Request<Scorer>().ScoreAsteroid(size);
         if (size > 1) Split();
     }
 

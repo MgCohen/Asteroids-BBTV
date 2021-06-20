@@ -31,17 +31,23 @@ public class Services
         }
     }
 
-    public static T Request<T>(bool searchUnavailable = false) where T : UnityEngine.Object
+    public static T Request<T>(bool searchUnavailable = true) where T : UnityEngine.Object
     {
         object service;
         var hasService = services.TryGetValue(typeof(T), out service);
-        if (!hasService)
+        if (!hasService && searchUnavailable)
         {
-            service = GameObject.FindObjectOfType<T>();
-            if (service == default)
-                Debug.Log("There is no service of requested type");
-            else
-                hasService = true;
+                service = GameObject.FindObjectOfType<T>();
+                if (service == default)
+                {
+
+                    Debug.Log("There is no service of requested type");
+                }
+                else
+                {
+                    Register<T>(service as T);
+                    hasService = true;
+                }
         }
         return hasService ? (T)service : default;
     }

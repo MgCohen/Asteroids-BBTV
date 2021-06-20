@@ -19,17 +19,12 @@ public class AsteroidController : MonoBehaviour
         Services.Register<AsteroidController>(this);
         playArea = PlayArea.Frame;
         manager = Services.Request<LevelManager>();
-        manager.OnWaveEnd.AddListener(SpawnWave);
+        manager.OnNewWave.AddListener(SpawnWave);
     }
 
     private void OnDisable()
     {
         Services.Unregister<AsteroidController>(this);
-    }
-
-    private void Start()
-    {
-        //manager.EndWave();
     }
 
 
@@ -49,7 +44,7 @@ public class AsteroidController : MonoBehaviour
         int asteroidCount = 5 + wave;
         for (int i = 0; i < asteroidCount; i++)
         {
-            var point = RandomPoint();
+            Vector3 point;
             do
             {
                 point = RandomPoint();
