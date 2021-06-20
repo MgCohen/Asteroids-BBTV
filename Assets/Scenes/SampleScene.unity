@@ -351,7 +351,7 @@ MonoBehaviour:
   bulletPoint: {fileID: 1353278070}
   pulseCd: 2
   pulseRange: 2
-  pulsePrefab: {fileID: 8393268535980909314, guid: 18f5c398185f64808b2a560c804ac19a, type: 3}
+  pulsePrefab: {fileID: 4424416270024823091, guid: 18f5c398185f64808b2a560c804ac19a, type: 3}
 --- !u!114 &260247486
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -371,7 +371,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 260247481}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -485,6 +485,7 @@ GameObject:
   - component: {fileID: 951607481}
   - component: {fileID: 951607483}
   - component: {fileID: 951607484}
+  - component: {fileID: 951607485}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -558,6 +559,23 @@ MonoBehaviour:
   OnScore:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &951607485
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 951607480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bda60c0dfda44e92b7cd543bbb8680f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  saucers:
+  - {fileID: 3788705453330650953, guid: d05f2386bb9b9495694eb6081de6cc04, type: 3}
+  - {fileID: 3864900813942746814, guid: 847b6e0bec6e6462786b67ea705faf35, type: 3}
+  spawnTimer: 10
+  activeSaucers: []
 --- !u!1 &974171874
 GameObject:
   m_ObjectHideFlags: 0

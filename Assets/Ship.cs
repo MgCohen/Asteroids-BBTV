@@ -39,14 +39,10 @@ public class Ship : MonoBehaviour, IDestroyable
             Thrust();
 
         if (Input.GetKeyDown(KeyCode.Space) && CheckFireCD())
-        {
             Shot();
-        }
 
         if(Input.GetKeyDown(KeyCode.S) && CheckPulseCD())
-        {
             Pulse();
-        }
     }
 
     void Thrust()
