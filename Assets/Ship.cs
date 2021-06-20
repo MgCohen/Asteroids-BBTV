@@ -18,7 +18,7 @@ public class Ship : MonoBehaviour, IDestroyable
     [SerializeField] float pulseCd;
     float lastPulseTime;
     [SerializeField] float pulseRange;
-    [SerializeField] GameObject pulsePrefab;
+    [SerializeField] Pulse pulsePrefab;
 
     Rigidbody2D body;
     LevelManager manager;
@@ -79,7 +79,8 @@ public class Ship : MonoBehaviour, IDestroyable
 
     void Pulse()
     {
-        Instantiate(pulsePrefab, transform);
+        Pulse pulse = Instantiate(pulsePrefab, transform);
+        pulse.Set(pulseRange);
         lastPulseTime = Time.time;
     }
 
