@@ -41,7 +41,7 @@ public class AsteroidController : MonoBehaviour
     {
         //any crazy spawn algorithm
         int wave = manager.currentWave;
-        int asteroidCount = 5 + wave;
+        int asteroidCount = 3 + wave;
         for (int i = 0; i < asteroidCount; i++)
         {
             Vector3 point;

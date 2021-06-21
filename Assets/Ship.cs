@@ -38,20 +38,20 @@ public class Ship : MonoBehaviour, IDestroyable
         if (Input.GetKey(KeyCode.W))
             Thrust();
 
-        if (Input.GetKeyDown(KeyCode.Space) && CheckFireCD())
+        if (Input.GetKeyDown(KeyCode.Space))
             Shot();
 
-        if(Input.GetKeyDown(KeyCode.S) && CheckPulseCD())
+        if(Input.GetKeyDown(KeyCode.S))
             Pulse();
     }
 
-    void Thrust()
+    public void Thrust()
     {
         Vector2 velocity = body.velocity + (Time.deltaTime * acceleration * (Vector2)transform.up); //maybe change to addForce
         body.velocity = (velocity.sqrMagnitude > (maxSpeed * maxSpeed)) ? velocity.normalized * maxSpeed : velocity;
     }
 
-    void Rotate(float direction)
+    public void Rotate(float direction)
     {
         Vector3 rotation = new Vector3(0, 0, Time.deltaTime * rotationSpeed * direction);
         transform.Rotate(rotation);
@@ -62,8 +62,9 @@ public class Ship : MonoBehaviour, IDestroyable
         return Time.time - lastFireTime > fireCd;
     }
 
-    void Shot()
+    public void Shot()
     {
+        if (!CheckFireCD()) return;
         Instantiate(bulletPrefab, bulletPoint.position, transform.rotation);
         lastFireTime = Time.time;
     }
@@ -73,8 +74,9 @@ public class Ship : MonoBehaviour, IDestroyable
         return Time.time - lastPulseTime > pulseCd;
     }
 
-    void Pulse()
+    public void Pulse()
     {
+        if (!CheckPulseCD()) return;
         Pulse pulse = Instantiate(pulsePrefab, transform);
         pulse.Set(pulseRange);
         lastPulseTime = Time.time;

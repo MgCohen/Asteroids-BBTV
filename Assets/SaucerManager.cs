@@ -5,14 +5,16 @@ using UnityEngine;
 public class SaucerManager : MonoBehaviour
 {
 
-    Vector2 playArea;
     Scorer score;
     LevelManager manager;
 
     [SerializeField] List<Saucer> saucers = new List<Saucer>();
     [SerializeField] float spawnTimer;
-    float lastSpawnTime;
     public List<Saucer> activeSaucers = new List<Saucer>();
+    float currentSpawnTimer;
+    float lastSpawnTime;
+    Vector2 playArea;
+    bool started = false;
 
     private void OnEnable()
     {
@@ -22,6 +24,8 @@ public class SaucerManager : MonoBehaviour
         score.OnScore.AddListener(CheckScore);
         manager = Services.Request<LevelManager>();
         manager.OnNewWave.AddListener(ResetSaucers);
+        manager.OnGameStart.AddListener(StartSaucers);
+        currentSpawnTimer = spawnTimer;
     }
 
     private void OnDisable()
@@ -29,12 +33,19 @@ public class SaucerManager : MonoBehaviour
         Services.Unregister<SaucerManager>(this);
         score.OnScore.RemoveListener(CheckScore);
         manager.OnNewWave.RemoveListener(ResetSaucers);
+        manager.OnGameStart.RemoveListener(StartSaucers);
     }
 
     private void Update()
     {
-        if (Time.time - lastSpawnTime > spawnTimer)
-            SpawnSaucer(Random.Range(0, saucers.Count));
+        if (Time.time - lastSpawnTime > spawnTimer && started)
+            SpawnSaucer(Random.Range(1, saucers.Count));
+    }
+
+    void StartSaucers()
+    {
+        lastSpawnTime = Time.time;
+        started = true;
     }
 
     void SpawnSaucer(int size)
@@ -42,8 +53,10 @@ public class SaucerManager : MonoBehaviour
         var y = Random.Range(-playArea.y, playArea.y);
         var x = Random.value > 0.5f ? playArea.x : -playArea.x;
         Vector2 spawnPos = new Vector2(x, y);
+        Debug.Log(1);
         var saucer = Instantiate(saucers[size - 1], spawnPos, Quaternion.identity);
         saucer.size = size;
+        Debug.Log(2);
         lastSpawnTime = Time.time;
     }
 
@@ -63,6 +76,6 @@ public class SaucerManager : MonoBehaviour
         }
         activeSaucers.Clear();
         lastSpawnTime = Time.time;
-        spawnTimer = Mathf.Clamp(spawnTimer - 0.2f, 3, 10);
+        currentSpawnTimer = Mathf.Clamp(currentSpawnTimer - 0.2f, 3, spawnTimer);
     }
 }

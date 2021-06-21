@@ -23,6 +23,11 @@ public class LevelManager : MonoBehaviour
     [HideInInspector]
     public UnityEvent OnNewWave = new UnityEvent();
 
+    [HideInInspector]
+    public UnityEvent OnGameStart = new UnityEvent();
+
+    public UnityEvent OnGameEnd = new UnityEvent();
+
     public void EndWave()
     {
         currentWave++;
@@ -32,9 +37,13 @@ public class LevelManager : MonoBehaviour
     public void DestroyShip()
     {
         playerLives--;
-        if(playerLives >= 0)
+        if (playerLives >= 0)
         {
             SpawnShip();
+        }
+        else
+        {
+            OnGameEnd.Invoke();
         }
     }
 
@@ -45,6 +54,7 @@ public class LevelManager : MonoBehaviour
 
     IEnumerator RespawnCO()
     {
+        yield return new WaitForSeconds(0.2f);
         while (Physics2D.OverlapCircle(Vector3.zero, 1.5f))
         {
             yield return new WaitForSeconds(0.2f);
@@ -54,10 +64,15 @@ public class LevelManager : MonoBehaviour
         playerShip.gameObject.SetActive(true);
     }
 
-    private void Update()
+    public void StartGame()
     {
-        if (Input.GetKeyDown(KeyCode.K) && currentWave == 0)
-            EndWave();
+        OnGameStart.Invoke();
+        EndWave();
+    }
+
+    public void RestartGame()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(0);
     }
 }
 
