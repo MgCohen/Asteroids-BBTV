@@ -22,6 +22,6 @@ public class ScoreUi : MonoBehaviour
 
     public void UpdateScore()
     {
-        scoreText.text = scoreManager.currentScore.ToString();
+        scoreText.text = "SCORE: " + scoreManager.currentScore;
     }
 }

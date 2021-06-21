@@ -26,6 +26,9 @@ public class LevelManager : MonoBehaviour
     [HideInInspector]
     public UnityEvent OnGameStart = new UnityEvent();
 
+    [HideInInspector]
+    public UnityEvent OnLifeLost = new UnityEvent();
+
     public UnityEvent OnGameEnd = new UnityEvent();
 
     public void EndWave()
@@ -37,6 +40,7 @@ public class LevelManager : MonoBehaviour
     public void DestroyShip()
     {
         playerLives--;
+        OnLifeLost.Invoke();
         if (playerLives >= 0)
         {
             SpawnShip();
