@@ -10,6 +10,8 @@ public class LevelManager : MonoBehaviour
 
     public Ship playerShip;
 
+    bool isRespawning = false;
+
     private void OnEnable()
     {
         Services.Register<LevelManager>(this);
@@ -39,6 +41,7 @@ public class LevelManager : MonoBehaviour
 
     public void DestroyShip()
     {
+        if (isRespawning) return;
         playerLives--;
         OnLifeLost.Invoke();
         if (playerLives >= 0)
@@ -58,6 +61,7 @@ public class LevelManager : MonoBehaviour
 
     IEnumerator RespawnCO()
     {
+        isRespawning = true;
         yield return new WaitForSeconds(0.2f);
         while (Physics2D.OverlapCircle(Vector3.zero, 1.5f))
         {
@@ -66,6 +70,7 @@ public class LevelManager : MonoBehaviour
 
         playerShip.transform.position = Vector3.zero;
         playerShip.gameObject.SetActive(true);
+        isRespawning = false;
     }
 
     public void StartGame()
