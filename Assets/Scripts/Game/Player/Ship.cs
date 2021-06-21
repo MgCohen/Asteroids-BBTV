@@ -6,18 +6,18 @@ public class Ship : MonoBehaviour, IDestroyable
 {
     [Header("Movement")]
     [SerializeField] float acceleration;
-    [SerializeField] float maxSpeed;
+    public float maxSpeed;
     [Header("Manuever")]
     [SerializeField] float rotationSpeed;
     [Header("Firing")]
-    [SerializeField] float fireCd;
+    public float fireCd;
     float lastFireTime;
     [SerializeField] GameObject bulletPrefab;
     [SerializeField] Transform bulletPoint;
     [Header("Pulse")]
-    [SerializeField] float pulseCd;
+    public float pulseCd;
     float lastPulseTime;
-    [SerializeField] float pulseRange;
+    public float pulseRange;
     [SerializeField] Pulse pulsePrefab;
 
     Rigidbody2D body;

@@ -2077,6 +2077,9 @@ MonoBehaviour:
   OnGameStart:
     m_PersistentCalls:
       m_Calls: []
+  OnLifeLost:
+    m_PersistentCalls:
+      m_Calls: []
   OnGameEnd:
     m_PersistentCalls:
       m_Calls:
@@ -2324,6 +2327,7 @@ GameObject:
   - component: {fileID: 1010884291}
   - component: {fileID: 1010884293}
   - component: {fileID: 1010884292}
+  - component: {fileID: 1010884294}
   m_Layer: 11
   m_Name: HittableButton
   m_TagString: Untagged
@@ -2495,6 +2499,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.19, y: 1.35}
   m_EdgeRadius: 0
+--- !u!114 &1010884294
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1010884288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53eae7b52e09243419190551fcd87319, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1213122265
 GameObject:
   m_ObjectHideFlags: 0
@@ -2716,6 +2732,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 583f5fea34f834934ae7e7cf6ea9f9e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lifeText: {fileID: 1492701168}
 --- !u!114 &1492701168
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2828,7 +2845,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1545757371
 RectTransform:
   m_ObjectHideFlags: 0
